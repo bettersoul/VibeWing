@@ -13,6 +13,8 @@ import { desktop } from './services/desktop'
 import { confirmDialog, confirmState, resolveConfirm } from './services/confirm'
 import type { Project, ProjectView, UpdateInfo } from './types'
 
+const updateModalOpen = ref(false)
+
 const projects = ref<ProjectView[]>([])
 const dataDir = ref('')
 const editorOpen = ref(false)
@@ -155,7 +157,39 @@ async function checkUpdate() {
     updateInfo.value = null
   } finally {
     checkingUpdate.value = false
+    refreshUpdateModal()
   }
+}
+
+function refreshUpdateModal() {
+  const dismissed = settings.value.update_dismissed_version
+  updateModalOpen.value = !!updateInfo.value && updateInfo.value.latest_version !== dismissed
+}
+
+async function ignoreUpdate() {
+  if (!updateInfo.value) return
+  const updated = { ...settings.value, update_dismissed_version: updateInfo.value.latest_version }
+  await desktop.saveSettings(updated)
+  settings.value = updated
+  updateModalOpen.value = false
+}
+
+function laterUpdate() {
+  updateModalOpen.value = false
+}
+
+async function goUpdate() {
+  if (!updateInfo.value) return
+  const url = updateInfo.value.html_url
+  const updated = { ...settings.value, update_dismissed_version: updateInfo.value.latest_version }
+  await desktop.saveSettings(updated)
+  settings.value = updated
+  updateModalOpen.value = false
+  await desktop.openUrl(url)
+}
+
+function openUpdateUrl() {
+  if (updateInfo.value) desktop.openUrl(updateInfo.value.html_url)
 }
 
 onMounted(async () => {
@@ -166,8 +200,7 @@ onMounted(async () => {
   await refresh()
   refreshTimer = window.setInterval(refresh, 10_000)
 
-  const last = settings.value.last_update_check || 0
-  if (settings.value.check_updates && Date.now() / 1000 - last > 86_400) {
+  if (settings.value.check_updates) {
     checkUpdate()
   }
 })
@@ -248,9 +281,16 @@ onBeforeUnmount(() => clearInterval(refreshTimer))
       <button type="button" @click="openDir" :title="t('app.openDataDir')">{{ t('app.openDataDir') }}</button>
     </div>
 
-    <div v-if="updateInfo" class="update-banner">
-      <span>{{ t('app.updateAvailable', { current: updateInfo.current_version, latest: updateInfo.latest_version }) }}</span>
-      <button type="button" @click="desktop.openUrl(updateInfo.html_url)">{{ t('app.updateButton') }}</button>
+    <div v-if="updateModalOpen && updateInfo" class="modal update-modal" @mousedown.self="laterUpdate">
+      <section class="dialog update-dialog">
+        <h2>{{ t('app.updateTitle') }}</h2>
+        <p>{{ t('app.updateAvailable', { current: updateInfo.current_version, latest: updateInfo.latest_version }) }}</p>
+        <div class="update-actions">
+          <button type="button" @click="ignoreUpdate">{{ t('app.updateIgnore') }}</button>
+          <button type="button" @click="laterUpdate">{{ t('app.updateLater') }}</button>
+          <button type="button" class="primary" @click="goUpdate">{{ t('app.updateButton') }}</button>
+        </div>
+      </section>
     </div>
 
     <section v-if="projects.length" class="project-grid">
@@ -287,7 +327,9 @@ onBeforeUnmount(() => clearInterval(refreshTimer))
     <SettingsPanel
       :open="settingsOpen"
       :settings="settings"
+      :update-info="updateInfo"
       @close="settingsOpen = false"
+      @download-update="openUpdateUrl"
       @saved="(s) => { settings = s; language = s.language; applyTheme(s.theme) }"
     />
 

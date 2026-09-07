@@ -43,6 +43,7 @@ export interface Settings {
   theme: { accent: string; bg: string; card: string; preset: string }
   check_updates: boolean
   last_update_check?: number
+  update_dismissed_version?: string
   default_chat_model: string
   providers: Provider[]
   onboarding_complete?: boolean

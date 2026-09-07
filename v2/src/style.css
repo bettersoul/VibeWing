@@ -230,25 +230,42 @@ main {
   white-space: nowrap;
 }
 
-.update-banner {
+.update-dialog {
+  width: 360px;
+  padding: 20px;
+  text-align: center;
+}
+
+.update-dialog h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: var(--app-text);
+}
+
+.update-dialog p {
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.update-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.update-hint {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 18px;
+  margin-top: 12px;
   padding: 10px 14px;
   border-radius: 12px;
   background: var(--card-bg);
   border: 1px solid var(--accent);
   color: var(--app-text);
   font-size: 13px;
-}
-
-.update-banner button {
-  height: 28px;
-  padding: 0 12px;
-  font-size: 12px;
-  white-space: nowrap;
 }
 
 .brand {

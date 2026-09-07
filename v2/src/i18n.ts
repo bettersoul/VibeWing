@@ -19,7 +19,10 @@ const messages: Record<Language, MessageMap> = {
     'app.rescanFailed': '重新扫描失败',
     'app.openDataDirFailed': '打开目录失败',
     'app.updateAvailable': '发现新版本 {latest}（当前 {current}）',
+    'app.updateTitle': '发现新版本',
     'app.updateButton': '去下载',
+    'app.updateLater': '稍后下载',
+    'app.updateIgnore': '不再提示',
     'app.brand.tagline.dev': 'T',
 
     'project.imported': '外部导入',
@@ -193,7 +196,10 @@ const messages: Record<Language, MessageMap> = {
     'app.rescanFailed': 'Rescan failed',
     'app.openDataDirFailed': 'Failed to open folder',
     'app.updateAvailable': 'New version {latest} available (current {current})',
+    'app.updateTitle': 'New version available',
     'app.updateButton': 'Download',
+    'app.updateLater': 'Later',
+    'app.updateIgnore': "Don't show again",
     'app.brand.tagline.dev': 'T',
 
     'project.imported': 'Imported',

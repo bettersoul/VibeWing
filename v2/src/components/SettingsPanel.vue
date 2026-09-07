@@ -3,10 +3,10 @@ import { computed, reactive, ref, watch } from 'vue'
 import { desktop } from '../services/desktop'
 import { language, t } from '../i18n'
 import { confirmDialog } from '../services/confirm'
-import type { Provider, Settings } from '../types'
+import type { Provider, Settings, UpdateInfo } from '../types'
 
-const props = defineProps<{ open: boolean; settings: Settings }>()
-const emit = defineEmits<{ close: []; saved: [settings: Settings] }>()
+const props = defineProps<{ open: boolean; settings: Settings; updateInfo: UpdateInfo | null }>()
+const emit = defineEmits<{ close: []; saved: [settings: Settings]; downloadUpdate: [] }>()
 const clone = <T,>(value: T): T => JSON.parse(JSON.stringify(value))
 const form = reactive<Settings>(clone(props.settings))
 const tab = ref<'models' | 'general'>('models')
@@ -192,6 +192,10 @@ async function confirmAdd() {
             <input v-model="form.check_updates" type="checkbox" />
             {{ t('settings.general.checkUpdates') }}
           </label>
+          <p v-if="updateInfo" class="update-hint">
+            <span>{{ t('app.updateAvailable', { current: updateInfo.current_version, latest: updateInfo.latest_version }) }}</span>
+            <button type="button" class="inline-edit" @click="emit('downloadUpdate')">{{ t('app.updateButton') }}</button>
+          </p>
           <label>
             {{ t('settings.general.memory') }}
             <textarea
