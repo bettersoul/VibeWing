@@ -231,8 +231,8 @@ main {
 }
 
 .update-dialog {
-  width: 360px;
-  padding: 20px;
+  width: 300px;
+  padding: 18px;
   text-align: center;
 }
 
@@ -252,6 +252,13 @@ main {
   display: flex;
   justify-content: center;
   gap: 8px;
+}
+
+.update-actions button {
+  flex: 1;
+  height: 32px;
+  padding: 0 8px;
+  font-size: 12px;
 }
 
 .update-hint {
