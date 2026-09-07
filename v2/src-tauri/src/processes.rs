@@ -1,5 +1,4 @@
 use std::{
-    collections::HashMap,
     fs::OpenOptions,
     net::{SocketAddr, TcpStream},
     path::Path,
@@ -355,62 +354,7 @@ pub fn pid_on_port(port: &str) -> Option<u32> {
     }
 }
 
-/// One entry of the process tree a service is actually running as.
-#[derive(Clone, Debug, serde::Serialize)]
-pub struct ProcessInfo {
-    pub pid: u32,
-    pub name: String,
-    pub memory_mb: f64,
-    /// True for the wrapper shell VibeWing spawned. Every other entry was
-    /// started by the project's own toolchain, not by VibeWing.
-    pub ours: bool,
-}
 
-/// The process tree rooted at `root`, flattened breadth-first.
-///
-/// Answers the question customers keep asking when they open Task Manager:
-/// "why does starting one service show up as two Node / two Python processes?"
-/// VibeWing spawns exactly one wrapper shell per service — the entry marked
-/// `ours` — and everything below it is the project's own tooling: npm -> node ->
-/// vite, the esbuild helper a dev server forks, or uvicorn's `--reload`
-/// parent/worker pair. Showing this tree is what makes that visible without
-/// having to guess from a flat process list.
-pub fn process_tree(root: Option<u32>) -> Vec<ProcessInfo> {
-    use std::collections::VecDeque;
-
-    let Some(root) = root else {
-        return Vec::new();
-    };
-    let mut system = sysinfo::System::new_all();
-    system.refresh_processes();
-
-    // parent -> children, so the walk below never rescans the process table.
-    let mut children: HashMap<u32, Vec<u32>> = HashMap::new();
-    for (pid, process) in system.processes() {
-        if let Some(parent) = process.parent() {
-            children.entry(parent.as_u32()).or_default().push(pid.as_u32());
-        }
-    }
-
-    let mut out = Vec::new();
-    let mut queue: VecDeque<u32> = VecDeque::from(vec![root]);
-    while let Some(pid) = queue.pop_front() {
-        let Some(process) = system.process(sysinfo::Pid::from_u32(pid)) else {
-            continue;
-        };
-        out.push(ProcessInfo {
-            pid,
-            name: process.name().to_string(),
-            memory_mb: process.memory() as f64 / 1024.0 / 1024.0,
-            ours: pid == root,
-        });
-        if let Some(kids) = children.get_mut(&pid) {
-            kids.sort_unstable();
-            queue.extend(kids.iter().copied());
-        }
-    }
-    out
-}
 
 pub fn stop(project: &mut Project, service: ServiceKind) -> Result<(), String> {
     let port = service.port(project).to_string();

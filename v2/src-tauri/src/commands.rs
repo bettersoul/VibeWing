@@ -158,23 +158,6 @@ pub fn service_action(
     Ok(view)
 }
 
-/// The process tree a service is running as, flattened breadth-first.
-/// Answers "why does this service show up as N processes in Task Manager?"
-/// without making the customer or the support agent open the OS task list.
-#[tauri::command]
-pub fn service_processes(
-    state: State<'_, AppState>,
-    id: String,
-    service: ServiceKind,
-) -> Result<Vec<processes::ProcessInfo>, String> {
-    let projects = state.projects.lock().map_err(|e| e.to_string())?;
-    let project = projects
-        .iter()
-        .find(|project| project.id == id)
-        .ok_or("项目不存在")?;
-    Ok(processes::process_tree(service.pid(project)))
-}
-
 #[tauri::command]
 pub fn build_project(
     state: State<'_, AppState>,
