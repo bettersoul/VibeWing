@@ -230,9 +230,9 @@ main {
   white-space: nowrap;
 }
 
-.update-dialog {
-  width: 300px;
-  padding: 18px;
+.dialog.update-dialog {
+  width: 250px;
+  padding: 14px;
   text-align: center;
 }
 
@@ -250,14 +250,15 @@ main {
 
 .update-actions {
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  gap: 8px;
+  gap: 4px;
 }
 
 .update-actions button {
-  flex: 1;
-  height: 32px;
-  padding: 0 8px;
+  flex: 0 0 auto;
+  height: 28px;
+  padding: 0 6px;
   font-size: 12px;
 }
 
