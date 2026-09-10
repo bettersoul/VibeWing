@@ -314,7 +314,7 @@ onBeforeUnmount(() => clearInterval(refreshTimer))
       @remove="remove"
     />
 
-    <div v-if="chatOpen" class="modal chat-modal" @mousedown.self="chatOpen = false">
+    <div v-show="chatOpen" class="modal chat-modal" @mousedown.self="chatOpen = false">
       <section class="dialog chat-dialog">
         <header>
           <h2>{{ t('chat.title') }}</h2>

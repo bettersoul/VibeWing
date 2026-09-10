@@ -16,7 +16,7 @@
 
 ## Why VibeWing?
 
-Vibe coding makes creating software easier, but the surrounding work still often requires terminal knowledge: starting separate frontend and backend services, finding ports, reading logs, building releases, and operating Git. VibeWing puts those repeatable tasks into one desktop workspace so your Coding Agent can focus on code.
+Vibe coding makes creating software easier, but the surrounding work still often requires terminal knowledge: starting separate frontend and backend services, finding ports, reading logs, building releases, and operating Git. VibeWing allowing you to start, restart, stop, build, inspect logs, and manage Git without repeatedly asking your Coding Agent to run terminal commands,puts those repeatable tasks into one desktop workspace so your Coding Agent can focus on code.
 
 ## Download and install
 
@@ -99,10 +99,7 @@ Set the Git root, frontend/backend working directories, start commands, and port
 
 Inspect live output without a terminal. Select only the relevant log lines, then copy them or attach them to AI Chat for first-pass diagnosis.
 
-<p align="center">
-  <img src="assets/screenshots/project-logs.png" alt="View project logs in VibeWing" width="48%">
-  <img src="assets/screenshots/ask-ai-from-logs.png" alt="Ask AI about selected VibeWing logs" width="48%">
-</p>
+![View project logs and ask AI in VibeWing](assets/screenshots/project-logs.png)
 
 ### AI Chat
 
@@ -356,7 +353,7 @@ VibeWing 是面向 Vibe Coding 用户的跨平台桌面工作台，把本地项�
 
 ## 为什么选择 VibeWing？
 
-Vibe Coding 让开发软件变得更容易，但项目周边工作通常仍然需要终端知识：启动相互独立的前后端服务、查找端口、阅读日志、构建产物，以及操作 Git。VibeWing 把这些重复工作集中到一个桌面工作台，让你的 Coding Agent 专注于编写和修复代码。
+Vibe Coding 让开发软件变得更容易，但项目周边工作通常仍然需要终端知识：启动相互独立的前后端服务、查找端口、阅读日志、构建产物，以及操作 Git。VibeWing 让你无需反复要求 Coding Agent 执行终端命令，即可启动、重启、停止、构建项目、查看日志和管理 Git，把这些重复工作集中到一个桌面工作台，让你的 Coding Agent 专注于编写和修复代码。
 
 ## 下载与安装
 
@@ -427,46 +424,43 @@ Agent 会检查你的仓库（`package.json`、`requirements.txt` 等），然�
 
 在一个工作台中管理独立的前后端服务、端口、构建、日志和 Git。
 
-![VibeWing 项目管理总览](assets/screenshots/project-dashboard.png)
+![VibeWing 项目管理总览](assets/screenshots/project-dashboard-cn.png)
 
 ### 导入项目
 
 为前后端分离项目或全栈项目设置 Git 主目录、前后端工作目录、启动命令和端口。
 
-![将项目导入 VibeWing](assets/screenshots/import-project.png)
+![将项目导入 VibeWing](assets/screenshots/import-project-cn.png)
 
 ### 查看日志并问 AI
 
 无需打开终端即可查看实时输出。只选中相关日志，再进行复制或将其附加到 AI 对话中做初步诊断。
 
-<p align="center">
-  <img src="assets/screenshots/project-logs.png" alt="在 VibeWing 中查看项目日志" width="48%">
-  <img src="assets/screenshots/ask-ai-from-logs.png" alt="向 AI 询问选中的 VibeWing 日志" width="48%">
-</p>
+![在 VibeWing 中查看日志并问 AI](assets/screenshots/project-logs-cn.png)
 
 ### AI 对话
 
 保留多个独立对话，附加项目或日志上下文，切换模型，并在模型生成回答时继续处理其他工作。
 
-![VibeWing AI 对话](assets/screenshots/ai-chat.png)
+![VibeWing AI 对话](assets/screenshots/ai-chat-cn.png)
 
 ### 模型平台
 
 使用 API 地址、API Key 和官方模型 ID 接入兼容 OpenAI 格式的平台。VibeWing 不会预置任何平台或模型。
 
-![在 VibeWing 中配置模型平台](assets/screenshots/model-provider.png)
+![在 VibeWing 中配置模型平台](assets/screenshots/model-provider-cn.png)
 
 ### 可视化 Git 工作流
 
 切换或拉取分支、选择变更文件、暂存文件、生成 Conventional Commit 提交信息、本地提交并推送当前分支。
 
-![VibeWing 可视化 Git 工作流](assets/screenshots/git-workflow.png)
+![VibeWing 可视化 Git 工作流](assets/screenshots/git-workflow-cn.png)
 
 ### 浅色与深色主题
 
 使用内置浅色或深色主题，也可以自定义主色、背景色和卡片色。
 
-![VibeWing 深色主题](assets/screenshots/dark-theme.png)
+![VibeWing 深色主题](assets/screenshots/dark-theme-cn.png)
 
 ## 主要功能
 
@@ -568,7 +562,7 @@ VibeWing（v2 / Tauri 版）会持续关注一个专门的 **项目数据目录*
 - 当你的 Coding Agent（或你自己）把 `<name>.json` 放进该目录后，点击数据栏的 **重新扫描**，VibeWing 会读取目录下所有 `*.json`，把新项目显示出来并可直接启动。
 - 要移除某个文件型项目，只需删除其对应的 `*.json`，再点击 **重新扫描**，该项目就会从工作台消失。
 
-![VibeWing 扫描项目数据目录](assets/screenshots/scan-directory.png)
+![VibeWing 扫描项目数据目录](assets/screenshots/scan-directory-cn.png)
 
 ## 构建脚本识别
 

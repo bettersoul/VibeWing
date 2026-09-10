@@ -11,8 +11,14 @@ pub struct GitFile {
 fn run(cwd: &str, args: &[&str]) -> Result<String, String> {
     // git.exe is a console application on Windows: without CREATE_NO_WINDOW
     // every status poll, commit and push would flash a black window.
+    // `-c core.quotepath=false` makes git print non-ASCII paths (e.g. Chinese
+    // file/branch names) as raw UTF-8 instead of C-style octal escapes like
+    // "\347\233\256". This is per-invocation only, so we don't touch the
+    // user's own git config.
+    let mut full_args: Vec<&str> = vec!["-c", "core.quotepath=false"];
+    full_args.extend_from_slice(args);
     let output = processes::silent_command("git")
-        .args(args)
+        .args(full_args)
         .current_dir(cwd)
         .output()
         .map_err(|e| e.to_string())?;
